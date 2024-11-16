@@ -12,12 +12,10 @@ int main() {
 
     printf("Address of symbol: %p\nAddress of intNumber: %p\nAddress of  e: %p\n", ptrS, ptrN, &e);
  
+    uint32_t* dynamicInt = (uint32_t*)calloc(250, sizeof(uint32_t));
+    char* dynamicChar = (char*)calloc(1000000, sizeof(char));
 
-    //Evgeniy Onegin
-    
-    
-    
-    
-    
+    printf("Heap address of dynamicInt: %p, dynamicChar: %p\n", (void*)dynamicInt, (void*)dynamicChar);
+
     return 0;
 }
