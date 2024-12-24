@@ -19,4 +19,4 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(hw6-photo-viewer src/App.cpp)
 
-target_link_libraries(hw6-photo-viewer PRIVATE SFML::Graphics)
+target_link_libraries(hw6-photo-viewer PRIVATE SFML::Graphics SFML::Window)
