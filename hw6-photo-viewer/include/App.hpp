@@ -12,12 +12,16 @@ class App
 public:
     App();
     ~App();
+
     void run();
     
 private:
-    void voidDrawSprite();
     void log(const std::string& message, std::ofstream& logFile);
 
+private:
+    struct Params
+    {
+    };
     std::ofstream logFile;
     sf::RenderWindow window;
     sf::Texture texture;
