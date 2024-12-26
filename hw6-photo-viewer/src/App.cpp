@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <fstream>
 #include "../include/App.hpp"
+#include "../include/BaseWindows.hpp"
 
 void log(const std::string& message, std::ofstream& logFile)
 {
@@ -11,8 +12,11 @@ void log(const std::string& message, std::ofstream& logFile)
 App::App()
     : window(sf::VideoMode({1200, 600}), "Window")
     , texture("shion_and_naruto_wallpaper.bmp")
-    , sprite(texture) // Инициализация sprite текстурой
+    , sprite(texture)
 {
+    sf::VideoMode mode({1200, 600});
+    std::string windowTitle = "1st Window";
+    window1 = std::make_unique<BaseWindow>(mode, windowTitle);
 }
 
 App::~App()
@@ -22,29 +26,5 @@ App::~App()
 
 void App::run()
 {
-    while (window.isOpen())
-    {
-        // sf::Event event; //почему так нельзя?
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();       
-        }
-
-        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-        // log("Позиция мыши: " + std::to_string(mousePosition.x) + ", " + std::to_string(mousePosition.y), logFile);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N))
-        {
-            // log("Клавиша N нажата", logFile);
-        }
-
-        window.clear(sf::Color::Black);
-            // log("Черный фон", logFile); 
-
-        window.draw(sprite);
-            // log("Спрайт выведен", logFile); 
-
-        window.display();
-    }
+    window1->openWindow();
 }

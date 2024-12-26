@@ -3,9 +3,7 @@
 #include <string>
 #include <fstream>
 #include <SFML/Graphics.hpp>
-
-// Функция для записи сообщений в лог
-
+#include "../include/BaseWindows.hpp"
 
 class App
 {
@@ -19,12 +17,12 @@ private:
     void log(const std::string& message, std::ofstream& logFile);
 
 private:
-    struct Params
-    {
-    };
     std::ofstream logFile;
+    std::unique_ptr<BaseWindow> window1;
+
     sf::RenderWindow window;
     sf::Texture texture;
     sf::Sprite sprite;
+    // BaseWindow* window1;
 };
 
