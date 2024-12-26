@@ -21,6 +21,7 @@ add_executable(hw6-photo-viewer
     src/main.cpp    
     src/App.cpp
     src/BaseWindows.cpp
+    src/BaseContainers.cpp
 )
 
 target_link_libraries(hw6-photo-viewer PRIVATE SFML::Graphics SFML::Window)

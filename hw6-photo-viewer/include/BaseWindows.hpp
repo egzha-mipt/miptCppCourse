@@ -6,10 +6,10 @@
 class BaseWindow{
 public:
     BaseWindow(sf::VideoMode& mode, std::string& windowName);
-    ~BaseWindow();
+    virtual ~BaseWindow();
     
-    void openWindow();
-    void clearWindow();
+    virtual void openWindow();
+    virtual void clearWindow();
     void displayOnWindow();
 
 protected:

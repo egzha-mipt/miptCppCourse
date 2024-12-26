@@ -4,6 +4,7 @@
 #include <fstream>
 #include <SFML/Graphics.hpp>
 #include "../include/BaseWindows.hpp"
+#include "../include/BaseContainers.hpp"   
 
 class App
 {
@@ -19,6 +20,7 @@ private:
 private:
     std::ofstream logFile;
     std::unique_ptr<BaseWindow> window1;
+    std::unique_ptr<BaseContainer> container1;
 
     sf::RenderWindow window;
     sf::Texture texture;

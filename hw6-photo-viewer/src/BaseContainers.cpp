@@ -1,22 +1,18 @@
 #include <SFML/Graphics.hpp>
-#include <string>
 #include "../include/BaseWindows.hpp"
+#include "../include/BaseContainers.hpp"
 
-BaseWindow::BaseWindow(sf::VideoMode& mode, std::string& windowName)
-: window(mode, windowName){
+BaseContainer::BaseContainer(sf::VideoMode& mode, std::string& containerName) 
+    : BaseWindow(mode, containerName){
 };
 
-BaseWindow::~BaseWindow(){};
+BaseContainer::~BaseContainer(){};
 
-void BaseWindow::clearWindow(){
+void BaseContainer::clearWindow(){
     window.clear(sf::Color::Black);
 };
 
-void BaseWindow::displayOnWindow(){
-    window.display();
-};
-
-void BaseWindow::openWindow(){
+void BaseContainer::openWindow(){
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
