@@ -14,11 +14,12 @@ App::App()
     : sprite(texture)
 {
     sf::VideoMode mode({1200, 600});
+    sf::VideoMode modeSquare({600, 600});
     std::string windowTitle = "1st Window";
     std::string containerTitle = "1st Container";
 
     window1 = std::make_unique<BaseWindow>(mode, windowTitle);
-    container1 = std::make_unique<BaseContainer>(mode, containerTitle);
+    container1 = std::make_unique<BaseContainer>(modeSquare, containerTitle);
 }
 
 App::~App()
