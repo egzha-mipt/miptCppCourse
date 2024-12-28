@@ -4,6 +4,7 @@
 #include "../include/App.hpp"
 #include "../include/BaseWindows.hpp"
 #include "../include/BaseContainers.hpp"
+#include "../include/ImageContainer.hpp"
 
 void log(const std::string& message, std::ofstream& logFile)
 {
@@ -11,15 +12,18 @@ void log(const std::string& message, std::ofstream& logFile)
 }
 
 App::App()
-    : sprite(texture)
 {
+    sf::Texture texture("shion_and_naruto_wallpaper.bmp");
+    sf::Sprite sprite(texture);
     sf::VideoMode mode({1200, 600});
     sf::VideoMode modeSquare({600, 600});
     std::string windowTitle = "1st Window";
     std::string containerTitle = "1st Container";
+    std::string imageContainerTitle = "Image Container";
 
     window1 = std::make_unique<BaseWindow>(mode, windowTitle);
     container1 = std::make_unique<BaseContainer>(modeSquare, containerTitle);
+    imageContainer = std::make_unique<ImageContainer>(mode, imageContainerTitle);
 }
 
 App::~App()

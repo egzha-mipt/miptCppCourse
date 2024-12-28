@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "../include/BaseWindows.hpp"
 #include "../include/BaseContainers.hpp"   
+#include "../include/ImageContainer.hpp"
 
 class App
 {
@@ -21,10 +22,11 @@ private:
     std::ofstream logFile;
     std::unique_ptr<BaseWindow> window1;
     std::unique_ptr<BaseContainer> container1;
+    std::unique_ptr<ImageContainer> imageContainer;
 
     sf::RenderWindow window;
     sf::Texture texture;
-    sf::Sprite sprite;
+    // sf::Sprite sprite;
     // BaseWindow* window1;
 };
 
