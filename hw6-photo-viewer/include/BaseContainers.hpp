@@ -9,10 +9,7 @@ class BaseContainer : public BaseWindow
 public:
     BaseContainer(sf::VideoMode& mode, std::string& containerName);
     virtual ~BaseContainer();
-    
-    void clearWindow() override;
-    void openWindow() override;
 
-protected:
+public:
     sf::RenderWindow window;
 };
