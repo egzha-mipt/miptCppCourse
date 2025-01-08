@@ -30,12 +30,24 @@ int main()
 {
     //WINDOW & SPRITE
     std::ofstream logFile("log.txt", std::ios::out);
-    sf::RenderWindow window(sf::VideoMode({1200, 600}), "Window");
-    sf::State::Fullscreen;
+    sf::RenderWindow window(sf::VideoMode({1750, 600}), "Window");
 
     sf::Texture texture("shion_and_naruto_wallpaper.bmp");
     sf::Sprite sprite(texture);
     window.setPosition({120, 120}); 
+
+    bool focus = window.hasFocus();
+
+    // check whether the window has the focus
+
+    sf::Vector2u size = window.getSize();
+    float scaleX = static_cast<float>(size.x) / sprite.getTexture().getSize().x;
+    float scaleY = static_cast<float>(size.y) / sprite.getTexture().getSize().y;
+
+    // Выбираем максимальный масштаб, чтобы картинка заполнила всё окно
+    float scale = std::max(scaleX, scaleY);
+
+    sprite.setScale({scale, scale});
 
     //TEXT
     sf::Font font("tuffy.ttf");
@@ -49,6 +61,7 @@ int main()
     text.setPosition({800, 10});
     // set the text style
     text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+
 
     while (window.isOpen())
     {
@@ -72,6 +85,19 @@ int main()
                 std::cout << "new height: " << resized->size.y << std::endl;
                 #endif
             }
+
+            if (event->is<sf::Event::FocusLost>()) window.setFramerateLimit(10);;
+
+            if (event->is<sf::Event::FocusGained>()) window.setFramerateLimit(12);;  //интуитивно надо 9-20 
+            
+            #ifdef DEBUG_MODE
+            // if (focus){
+            // std::cout << "focus on" << std::endl;}
+
+            if (const auto* textEntered = event->getIf<sf::Event::TextEntered>())
+            if (textEntered->unicode < 128)
+                std::cout << "ASCII character typed: " << static_cast<char>(textEntered->unicode) << std::endl;
+            #endif
         }
 
         sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
@@ -82,14 +108,13 @@ int main()
             log("Клавиша N нажата", logFile);
         }
 
-        window.setFramerateLimit(10); //интуитивно надо 9-10 
+
         window.clear(sf::Color::Black);
             // log("Черный фон", logFile); 
 
-        window.draw(sprite);
-            // log("Спрайт выведен", logFile);     
+        window.draw(sprite); 
 
-        window.draw(text);
+        // window.draw(text);
             
         window.display();
     }
