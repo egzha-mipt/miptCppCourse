@@ -1,14 +1,12 @@
-#pragma once
+#pragma once 
 
-#include <string>
-#include <fstream>
 #include <SFML/Graphics.hpp>
-#include "../include/BaseWindows.hpp"
-#include "../include/BaseContainers.hpp"   
+#include <SFML/Window.hpp>
+#include "../include/BaseContainers.hpp"
 #include "../include/ImageContainer.hpp"
+#include "../include/BaseWindows.hpp"
 
-class App
-{
+class App {
 public:
     App();
     ~App();
@@ -19,14 +17,8 @@ private:
     void log(const std::string& message, std::ofstream& logFile);
 
 private:
-    std::ofstream logFile;
-    std::unique_ptr<BaseWindow> window1;
-    std::unique_ptr<BaseContainer> container1;
-    std::unique_ptr<ImageContainer> imageContainer;
-
-    sf::RenderWindow window;
-    sf::Texture texture;
-    // sf::Sprite sprite;
-    // BaseWindow* window1;
+    // std::ofstream logFile;
+    std::unique_ptr<BaseWindow> baseWindowMain;
+    std::unique_ptr<BaseContainer> baseContainerMain;
+    std::unique_ptr<ImageContainer> imageContainerMain;  // Используется для отображения изображений
 };
-

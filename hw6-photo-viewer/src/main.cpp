@@ -1,6 +1,5 @@
 #include "../include/App.hpp"
 
-
 int main()
 {
   {

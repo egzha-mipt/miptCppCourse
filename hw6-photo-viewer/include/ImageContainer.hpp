@@ -1,18 +1,17 @@
 #pragma once 
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
+#include <string>
 #include "../include/BaseContainers.hpp"
 
-class ImageContainer : public BaseContainer
-{
+class ImageContainer : public BaseContainer {
 public:
-    ImageContainer(sf::VideoMode& mode, std::string& ImageContainerName);
-    virtual ~ImageContainer();
+    ImageContainer(sf::VideoMode mode, std::string imageContainerName);
+
+    ~ImageContainer() override;
 
     void openWindow() override;
-    void drawWindow();
 
 private:
-    sf::Texture texture;
+    sf::RenderWindow window;  // Окно теперь создаётся здесь
 };

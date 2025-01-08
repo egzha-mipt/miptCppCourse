@@ -1,37 +1,38 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include "../include/BaseContainers.hpp"
 #include "../include/ImageContainer.hpp"
-#include "../include/BaseWindows.hpp"
 
-ImageContainer::ImageContainer(sf::VideoMode& mode, std::string& ImageContainerName) 
-    : BaseContainer(mode, ImageContainerName){
-};
+ImageContainer::ImageContainer(sf::VideoMode mode, std::string imageContainerName)
+    : BaseContainer(std::move(mode), std::move(imageContainerName)),
+      window(this->mode, this->windowName) {}
 
-ImageContainer::~ImageContainer(){};
+ImageContainer::~ImageContainer() {}
 
-sf::Texture texture("shion_and_naruto_wallpaper.bmp");
-sf::Sprite sprite(texture);
+void ImageContainer::openWindow() {
+    sf::Texture texture("shion_and_naruto_wallpaper.bmp");
 
-void ImageContainer::drawWindow(){
-    sf::Texture texture;
-    if (!texture.loadFromFile("shion_and_naruto_wallpaper.bmp"))
-        return;
     sf::Sprite sprite(texture);
-    window.draw(sprite);
-}
 
-void ImageContainer::openWindow(){
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
-                window.close();       
+            {
+                window.close();
+            }
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                    window.close();
+            }
         }
+
+        window.setFramerateLimit(10);
+        
+        window.clear();
+
+        window.draw(sprite);
+            
+        window.display();
     }
 
-    clearWindow();
-    window.draw(sprite);
-    displayOnWindow();
 }

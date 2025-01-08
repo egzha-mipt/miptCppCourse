@@ -4,12 +4,12 @@
 #include <string>
 #include "../include/BaseWindows.hpp"
 
-class BaseContainer : public BaseWindow
-{
+class BaseContainer : public BaseWindow {
 public:
-    BaseContainer(sf::VideoMode& mode, std::string& containerName);
-    virtual ~BaseContainer();
+    BaseContainer(sf::VideoMode mode, std::string containerName);
+    ~BaseContainer();
+    void openWindow() override;
 
-public:
-    sf::RenderWindow window;
+protected:
+    sf::RenderWindow window;  // Окно остаётся, но создаётся внутри класса
 };
