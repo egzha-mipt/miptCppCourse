@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
+#include <thread>
 #ifdef _DEBUG
   #define DEBUG_MODE
 #endif
@@ -13,55 +14,62 @@ void log(const std::string& message, std::ofstream& logFile)
 
 void renderingThread(sf::RenderWindow* window)
 {
-    // activate the window's context
+    // Activate the OpenGL context for this thread
     window->setActive(true);
 
-    // the rendering loop
+    // Создаем объект для отрисовки (пример: круг)
+    sf::CircleShape shape(60);
+    shape.setFillColor(sf::Color(100, 250, 50));
+    shape.setPosition({200, 200});
+
+    // Основной цикл рендера
     while (window->isOpen())
     {
-        // draw...
+        // Очищаем окно
+        window->clear(sf::Color::Black);
 
-        // end the current frame
+        // Рисуем фигуру
+        window->draw(shape);
+
+        // Отображаем отрисованное
         window->display();
     }
 }
 
 int main()
 {
-    //WINDOW & SPRITE
+    //WINDOW & SPRITE (TEXTURE)
     std::ofstream logFile("log.txt", std::ios::out);
     sf::RenderWindow window(sf::VideoMode({1750, 600}), "Window");
 
     sf::Texture texture("shion_and_naruto_wallpaper.bmp");
     sf::Sprite sprite(texture);
     window.setPosition({120, 120}); 
+    // bool focus = window.hasFocus();
 
-    bool focus = window.hasFocus();
 
-    // check whether the window has the focus
+    //THREADS
+    window.setActive(false);
+    std::thread renderThread(renderingThread, &window);
 
+    
+    //BACKGROUND TEXTURE    
     sf::Vector2u size = window.getSize();
+    auto [width, height] = size;
+    std::cout << width << " " << height << std::endl;
     float scaleX = static_cast<float>(size.x) / sprite.getTexture().getSize().x;
     float scaleY = static_cast<float>(size.y) / sprite.getTexture().getSize().y;
-
-    // Выбираем максимальный масштаб, чтобы картинка заполнила всё окно
     float scale = std::max(scaleX, scaleY);
-
     sprite.setScale({scale, scale});
 
-    //TEXT
+    //TEXT 
     sf::Font font("tuffy.ttf");
     sf::Text text(font); // a font is required to make a text object
-    // set the string to display
     text.setString("shion_and_naruto_wallpaper");
-    // set the character size
     text.setCharacterSize(24); // in pixels, not points!
-    // set the color
-    text.setFillColor(sf::Color::Blue);
-    text.setPosition({800, 10});
-    // set the text style
+    text.setFillColor(sf::Color(255,119,203)); //Neon pink
+    text.setPosition({static_cast<float>(width-325), static_cast<float>(height - height + 5)});
     text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-
 
     while (window.isOpen())
     {
@@ -98,7 +106,25 @@ int main()
             if (textEntered->unicode < 128)
                 std::cout << "ASCII character typed: " << static_cast<char>(textEntered->unicode) << std::endl;
             #endif
+
+
+            if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
+            {
+            switch (mouseWheelScrolled->wheel)
+            {
+                case sf::Mouse::Wheel::Vertical:
+                    std::cout << "wheel type: vertical" << std::endl;
+                    break;
+                case sf::Mouse::Wheel::Horizontal:
+                    std::cout << "wheel type: horizontal" << std::endl;
+                    break;
+            }
+            std::cout << "wheel movement: " << mouseWheelScrolled->delta << std::endl;
+            std::cout << "mouse x: " << mouseWheelScrolled->position.x << std::endl;
+            std::cout << "mouse y: " << mouseWheelScrolled->position.y << std::endl;
+            }
         }
+        // renderThread.join();
 
         sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
         log("Позиция мыши: " + std::to_string(mousePosition.x) + ", " + std::to_string(mousePosition.y), logFile);
@@ -110,14 +136,14 @@ int main()
 
 
         window.clear(sf::Color::Black);
-            // log("Черный фон", logFile); 
+            log("Черный фон", logFile); 
 
         window.draw(sprite); 
-
-        // window.draw(text);
+        window.draw(text);
             
         window.display();
     }
 
+    std::cout << "N-Window is closed" << std::endl;
     return 0;
 }
