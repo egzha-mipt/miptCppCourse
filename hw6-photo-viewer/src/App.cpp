@@ -1,5 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
+#include <iostream>
+#ifdef _DEBUG
+  #define DEBUG_MODE
+#endif
+
 
 void log(const std::string& message, std::ofstream& logFile)
 {
@@ -23,15 +28,27 @@ void renderingThread(sf::RenderWindow* window)
 
 int main()
 {
+    //WINDOW & SPRITE
     std::ofstream logFile("log.txt", std::ios::out);
-
     sf::RenderWindow window(sf::VideoMode({1200, 600}), "Window");
+    sf::State::Fullscreen;
 
     sf::Texture texture("shion_and_naruto_wallpaper.bmp");
-
     sf::Sprite sprite(texture);
-
     window.setPosition({120, 120}); 
+
+    //TEXT
+    sf::Font font("tuffy.ttf");
+    sf::Text text(font); // a font is required to make a text object
+    // set the string to display
+    text.setString("shion_and_naruto_wallpaper");
+    // set the character size
+    text.setCharacterSize(24); // in pixels, not points!
+    // set the color
+    text.setFillColor(sf::Color::Blue);
+    text.setPosition({800, 10});
+    // set the text style
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
     while (window.isOpen())
     {
@@ -48,6 +65,13 @@ int main()
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                     window.close();
             }
+            if (const auto* resized = event->getIf<sf::Event::Resized>())
+            {
+                #ifdef DEBUG_MODE
+                std::cout << "new width: " << resized->size.x << std::endl;
+                std::cout << "new height: " << resized->size.y << std::endl;
+                #endif
+            }
         }
 
         sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
@@ -59,12 +83,13 @@ int main()
         }
 
         window.setFramerateLimit(10); //интуитивно надо 9-10 
-        
         window.clear(sf::Color::Black);
             // log("Черный фон", logFile); 
 
         window.draw(sprite);
             // log("Спрайт выведен", logFile);     
+
+        window.draw(text);
             
         window.display();
     }
