@@ -2,15 +2,23 @@
 
 App::App()
 {
-    sf::VideoMode modeStandart({1980, 1080});
-    sf::VideoMode modeSquare({600, 600});
+    sf::VideoMode modeHd({1280, 720});
+    sf::VideoMode modeSquare({500, 500});
     std::string imageContainerTitle = "Image Container";
+    std::string baseContainerTitle = "Base Container";
 
-    imageContainerMain = std::make_unique<ImageContainer>(modeStandart, imageContainerTitle);
+    imageContainerMain = std::make_unique<ImageContainer>(modeHd, imageContainerTitle);
+    baseContainerMain = std::make_unique<BaseContainer>(modeSquare, baseContainerTitle);
 }
 
 App::~App() {}
 
 void App::run() {
     imageContainerMain->openWindow();
+    baseContainerMain->openWindow();
 }
+
+// void App::run() { // костыльный метод
+//     imageContainerMain->~ImageContainer();
+//     baseContainerMain->openWindow();
+// }

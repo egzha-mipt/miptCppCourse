@@ -7,3 +7,6 @@ Thumbs.db
 **/build/
 *.json
 
+.vs/slnx.sqlite
+.vs/miptCppCourse/v17/.wsuo
+.vs/miptCppCourse/v17/Browse.VC.db

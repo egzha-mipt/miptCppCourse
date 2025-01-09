@@ -1,13 +1,22 @@
 #include "../include/BaseContainers.hpp"
+#include <iostream>
 
 BaseContainer::BaseContainer(sf::VideoMode mode, std::string containerName)
     : BaseWindow(std::move(mode), std::move(containerName)),
       window(this->mode, this->windowName) {}
 
 
-BaseContainer::~BaseContainer() {}
+
+BaseContainer::~BaseContainer() {
+    if (window.isOpen()) {
+        window.close();
+        std::cout << "Base Container closed in destructor!" << std::endl;
+    }
+}
 
 void BaseContainer::openWindow() {
+    sf::Texture texture("shion_and_naruto_wallpaper.bmp");
+    sf::Sprite sprite(texture);
     while (window.isOpen())
     {
 
@@ -30,7 +39,7 @@ void BaseContainer::openWindow() {
         
         window.clear();
 
-        // window.draw(sprite);
+        window.draw(sprite);
             
         window.display();
     }
