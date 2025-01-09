@@ -13,5 +13,5 @@ public:
     void openWindow() override;
 
 private:
-    sf::RenderWindow window;  // Окно теперь создаётся здесь
+    sf::RenderWindow window;
 };

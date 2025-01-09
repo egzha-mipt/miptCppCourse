@@ -8,9 +8,9 @@ public:
     BaseWindow(sf::VideoMode mode, std::string windowName);
     virtual ~BaseWindow();
     
-    virtual void openWindow() = 0;  // Теперь это чисто виртуальный метод
+    virtual void openWindow() = 0;
 
 protected:
-    sf::VideoMode mode;            // Храним параметры для окна
-    std::string windowName;        // Название окна
+    sf::VideoMode mode;
+    std::string windowName;
 };

@@ -11,5 +11,5 @@ public:
     void openWindow() override;
 
 protected:
-    sf::RenderWindow window;  // Окно остаётся, но создаётся внутри класса
+    sf::RenderWindow window;  
 };

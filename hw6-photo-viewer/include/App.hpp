@@ -20,5 +20,5 @@ private:
     // std::ofstream logFile;
     std::unique_ptr<BaseWindow> baseWindowMain;
     std::unique_ptr<BaseContainer> baseContainerMain;
-    std::unique_ptr<ImageContainer> imageContainerMain;  // Используется для отображения изображений
+    std::unique_ptr<ImageContainer> imageContainerMain;  
 };
