@@ -1,2 +1,12 @@
 .DS_Store
 *.comp
+
+#Ignore thumbnails created by Windows
+Thumbs.db
+
+**/build/
+*.json
+
+.vs/slnx.sqlite
+.vs/miptCppCourse/v17/.wsuo
+.vs/miptCppCourse/v17/Browse.VC.db
